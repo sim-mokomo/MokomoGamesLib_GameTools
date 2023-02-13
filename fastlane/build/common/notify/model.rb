@@ -5,8 +5,7 @@ module Build
   module Common
     module Notify
       class Model
-        # @param [Unity::Common::Build::Result] build_result
-        # @param [String] project_name
+        # @param [Build::Common::Result] build_result
         # @param [Proc] succeed_sender
         def notify_unity_build(build_result, succeed_sender)
           title = build_result.succeeded ? 'ビルド完了' : 'ビルド失敗'

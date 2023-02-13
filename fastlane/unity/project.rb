@@ -9,6 +9,7 @@ module Unity
     class Env
       include IEnv
 
+      # @return [String]
       def repo_root_path
         ENV.fetch('REPOSITORY_ROOT_PATH', '')
       end
@@ -23,7 +24,7 @@ module Unity
 
     # @return [String]
     def root_path
-      env_repo_root_path = @env.repo
+      env_repo_root_path = @env.repo_root_path
       client_root_folder_name = 'client'.freeze
       if env_repo_root_path.empty?
         File.join(File.expand_path('../../../'), client_root_folder_name)
