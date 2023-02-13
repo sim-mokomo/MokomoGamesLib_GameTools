@@ -41,7 +41,7 @@ module System
 
       # @return [Config]
       def self.load_config
-        Config.load_from_json_file(File.join(File.expand_path('./secret'), 'config.json'))
+        Config.load_from_json_file(File.join(File.expand_path('/secret'), 'config.json'))
       end
 
       # @return [Config]

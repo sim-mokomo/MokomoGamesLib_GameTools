@@ -38,8 +38,8 @@ RUN apt install -y ruby-dev && \
     apt install -y ruby
 RUN gem install bundler
 ENV RUBYOPT -EUTF-8
-COPY Gemfile .
-COPY Gemfile.lock .
+COPY ./commons/Gemfile .
+COPY ./commons/Gemfile.lock .
 RUN bundle install
 
 # note: fastlnae向け言語設定
@@ -51,7 +51,7 @@ ENV RUBYOPT -EUTF-8
 RUN apt-get -y update
 RUN apt install -y ssh
 RUN apt install -y sshpass
-COPY ./docker/ssh/ssh_config /etc/ssh/ssh_config
+COPY ./commons/docker/ssh/ssh_config /etc/ssh/ssh_config
 
 # note: install nodejs
 RUN apt install -y nodejs && \
@@ -67,6 +67,9 @@ ENV GIT_COMMITTER_NAME sim-mokomo
 ENV GIT_AUTHOR_EMAIL 15795655+sim-mokomo@users.noreply.github.com
 ENV GIT_AUTHOR_NAME sim-mokomo
 ENV GIT_SSH_COMMAND /usr/bin/ssh
+
+# note: secret情報を追加
+COPY ./secret/ /secret/
 
 WORKDIR home
 

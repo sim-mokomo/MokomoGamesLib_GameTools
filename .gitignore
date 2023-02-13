@@ -61,5 +61,3 @@ fastlane/store/android/metadata/*
 !fastlane/store/android/metadata/*.rb
 fastlane/store/android/app_icons
 fastlane/report.xml
-fastlane/secret/*
-!fastlane/secret/config-template.json
