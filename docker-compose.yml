@@ -22,3 +22,4 @@ services:
       - GITHUB_WORKSPACE
       - PLATFORM
       - FASTLANE_PASSWORD
+      - CURRENT_GIT_BRANCH

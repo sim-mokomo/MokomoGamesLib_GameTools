@@ -93,6 +93,9 @@ export GITHUB_ENV=$github_env_path
 app_platform=$(get_app_platform "$@")
 export PLATFORM=$app_platform
 
+current_git_branch=$(git branch | grep "\\*" | cut -d ' ' -f2)
+export CURRENT_GIT_BRANCH=$current_git_branch
+
 export TO_HOST_BUILD_ROOT_PATH=~/Documents/archives
 mkdir -p $TO_HOST_BUILD_ROOT_PATH
 echo y | docker container prune
