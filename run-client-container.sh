@@ -101,3 +101,4 @@ mkdir -p $TO_HOST_BUILD_ROOT_PATH
 echo y | docker container prune
 docker-compose build
 docker-compose up -d --force-recreate
+docker-compose exec client bash
