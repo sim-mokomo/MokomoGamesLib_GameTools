@@ -40,8 +40,8 @@ module Build
 
         if result.succeeded
           # NOTE: ipaファイル作成
-          project = Unity::Project.new(Unity::Project::Env.new)
-          fastlane_root_path = File.join(project.root_path, 'tools/fastlane')
+          unity_env = Unity::Project::Env.new
+          fastlane_root_path = File.join(unity_env.repo_root_path, 'tools/commons/fastlane')
           @execute_on_host.call("source ~/.zshrc && \\
                                 cd #{fastlane_root_path} && \\
                                 bundle install && \\
