@@ -16,7 +16,7 @@ class Archives
       # @type [String]
       env_archive_root_path = ENV.fetch('TO_HOST_BUILD_ROOT_PATH', '')
       if is_host && env_archive_root_path.length.positive?
-        env_archive_root_path
+        return env_archive_root_path
       end
 
       '/archives'
