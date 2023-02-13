@@ -16,7 +16,7 @@ module Store
         # @return [String]
         def get_api_key_file_path
           config = System::Configs::Config.load_config
-          File.expand_path("./store/android/#{config.client.app.android.store_api_key_file_name}")
+          File.expand_path("./secret/store/android/#{config.client.app.android.store_api_key_file_name}")
         end
 
         # @return [String]
