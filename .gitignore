@@ -55,18 +55,11 @@ build-iPhoneSimulator/
 # .rubocop-https?--*
 .idea
 github-actions/runners/config.json
-fastlane/build/android/release.keystore
-*.mobileprovision
-*.p12
-*.p8
-fastlane/localize/fiery-bay-357312-b0e25f75c7b0.json
 fastlane/store/ios/metadata/*
 !fastlane/store/ios/metadata/*.rb
-fastlane/store/ios/screenshots
-fastlane/store/ios/app_icon
 fastlane/store/android/metadata/*
 !fastlane/store/android/metadata/*.rb
-fastlane/store/android/pc-api-8737001861060578257-155-8f4b74254e07.json
 fastlane/store/android/app_icons
-fastlane/config.json
 fastlane/report.xml
+fastlane/secret/*
+!fastlane/secret/config-template.json
