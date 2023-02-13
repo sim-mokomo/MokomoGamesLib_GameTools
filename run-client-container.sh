@@ -80,7 +80,7 @@ function get_client_repository_root_path(){
       exit 1
     fi
   else
-    pwd
+    dirname "$(dirname "$PWD")"
   fi
 }
 
