@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "Protobuf";
+
+message SavePomodoroRequest {
+  Pomodoro savePomodoro = 1;
+}
+
+message SavePomodoroResponse {
+  repeated Pomodoro pomodoroList = 1;
+}
+
+message Pomodoro {
+  string name = 1;
+  int64 completedUnixTime = 2;
+}
+
+message GetPomodoroListRequest {
+
+}
+
+message GetPomodoroListResponse {
+  repeated Pomodoro pomodoroList = 1;
+}

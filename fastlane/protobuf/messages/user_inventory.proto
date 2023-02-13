@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option csharp_namespace = "Protobuf";
+
+message AddProductRequest {
+    string itemID = 1;
+}
+
+message AddProductResponse {
+
+}
+

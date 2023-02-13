@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option csharp_namespace = "Protobuf";
+
+message HelloWorldRequest{
+    string inputValue = 1;
+}
+
+message HelloWorldResponse{
+    string message = 1;
+}

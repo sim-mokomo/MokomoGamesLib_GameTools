@@ -1,0 +1,24 @@
+require_relative 'model'
+require_relative '../result'
+
+lane :notify_unity_build_result_all_from_github_action do |options|
+  # @type [Array<Unity::Common::Build::Result>]
+  build_results = []
+  build_results.push(JSON.parse(options[:macos_build_result], object_class: Build::Common::Result)) if options[:macos_build_result]&.length&.positive?
+  build_results.push(JSON.parse(options[:ios_build_result], object_class: Build::Common::Result)) if options[:ios_build_result]&.length&.positive?
+  build_results.push(JSON.parse(options[:windows_build_result], object_class: Build::Common::Result)) if options[:windows_build_result]&.length&.positive?
+  build_results.push(JSON.parse(options[:android_build_result], object_class: Build::Common::Result)) if options[:android_build_result]&.length&.positive?
+
+  if build_results.any?
+    notify_model = Build::Common::Notify::Model.new
+    build_message = build_results.inject('') { |result, x| result + "#{notify_model.create_build_complete_message(x)}\n" }
+
+    send_slack_message(
+      title: 'ビルドレポート',
+      success: build_results.all?(&:succeeded),
+      payload: {
+        'ビルド結果' => build_message
+      }
+    )
+  end
+end

@@ -1,0 +1,40 @@
+require_relative './playfab/service'
+require_relative '../system/configs/config'
+require_relative '../font/service'
+require_relative '../github/api'
+require_relative '../git/utility'
+require_relative 'localize_sheet'
+require_relative 'localize_type'
+
+lane :update_unity_localized_info_all do |options|
+  localize_config = System::Configs::Config.load_config.localize
+  service = Font::Service.new(->(cmd) { execute_on_host(cmd: cmd) })
+  service.download_characters_file_all(localize_config.spreadsheet_id, localize_config.table_name)
+  create_font_unity_assets
+
+  update_string_table_all(env: options[:env])
+
+  begin
+    ensure_git_status_clean
+  rescue StandardError => _e
+    current_branch = Git::Utility.get_current_branch_name
+    commit_message = 'bot: アプリ内のローカライズ文言を更新'.freeze
+    base = options[:base] || current_branch
+    compare = options[:compare] || "#{current_branch}-update-localized-words-bot"
+    github_api = Github::API.new(->(cmd) { sh(cmd) })
+    github_api.create_pr(base, compare, commit_message, '', commit_message)
+    send_slack_message(title: 'アプリ内のローカライズ情報を更新するPRを作成しました。', success: true)
+  end
+end
+
+lane :update_string_table_all do |options|
+  config = System::Configs::Config.load_config
+  playfab_studio = config.playfab.get_studio(options[:env])
+  localize_config = config.localize
+  Localize::PlayFab::Service.new.update_string_table_all(
+    localize_config.spreadsheet_id,
+    localize_config.table_name,
+    playfab_studio.project_id,
+    playfab_studio.secret_key
+  )
+end

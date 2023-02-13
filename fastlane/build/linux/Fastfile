@@ -1,0 +1,24 @@
+require_relative '../common/command_service'
+require_relative '../common/config_service'
+require_relative 'process'
+
+platform :linux do
+  lane :unity_build do |options|
+    lane_request = Build::Common::BuildLaneRequest.new(options)
+    Build::Linux::Process.new(
+      Build::Common::ConfigService
+        .new
+        .create_config(System::Platform::LINUX, lane_request.environment, lane_request.build_id),
+      lane_request,
+      ->(cmd) { sh(cmd) },
+      ->(cmd) { execute_on_host(cmd: cmd) },
+      lambda { |title, success, payload|
+        send_slack_message(
+          title: title,
+          success: success,
+          payload: payload
+        )
+      }
+    ).execute
+  end
+end

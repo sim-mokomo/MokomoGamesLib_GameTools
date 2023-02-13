@@ -1,0 +1,32 @@
+require_relative '../common/request/build_lane_request'
+require_relative 'service'
+require_relative 'config_service'
+require_relative 'process'
+
+platform :ios do
+  # NOTE: Xcodeが絡むので、Docker上では実行できない
+  # @param [Shipping] env
+  desc 'ストアアップロード用のXcodeビルド'
+  lane :xcode_build do |options|
+    Build::IOS::Service.new.xcode_build(options[:env], ->(request) { gym(request) })
+  end
+
+  lane :unity_build do |options|
+    lane_request = Build::Common::BuildLaneRequest.new(options)
+    Build::IOS::Process.new(
+      Build::IOS::ConfigService
+        .new
+        .create_config(lane_request.environment, lane_request.build_id),
+      lane_request,
+      ->(cmd) { sh(cmd) },
+      ->(cmd) { execute_on_host(cmd: cmd) },
+      lambda { |title, success, payload|
+        send_slack_message(
+          title: title,
+          success: success,
+          payload: payload
+        )
+      }
+    ).execute
+  end
+end

@@ -1,0 +1,72 @@
+{
+    "client" : {
+        "unity" : {
+            "version" : "",
+            "project_name" : "",
+            "product_name" : ""
+        },
+        "app" : {
+            "app_version" : "",
+            "author_email" : "",
+            "app_identifier" : "",
+            "android" : {
+                "version_code" : 1,
+                "store_api_key_file_name" : ""
+            },
+            "ios" : {
+                "fastlane_password" : "",
+                "provisioning_profile" :{
+                    "dev" : "",
+                    "staging" : "",
+                    "production" : ""
+                },
+                "team_id" : "",
+                "admob_application_identifier" : "",
+                "store_key_id" : "",
+                "store_issuer_id" : "",
+                "store_auth_key" : ""
+            }
+        }
+    },
+    "server" : {
+        "playfab" : {
+            "dev" : {
+                "project_id" : "",
+                "secret_key" : ""
+            },
+            "staging" : {
+                "project_id" : "",
+                "secret_key" : ""
+            },
+            "production" : {
+                "project_id" : "",
+                "secret_key" : ""
+            }
+        },
+        "localize" : {
+            "spreadsheet_id" : "" ,
+            "table_name" : ""
+        }
+    },
+    "app_center" : {
+        "organization_name" : "",
+        "ios_app_name" : "",
+        "android_app_name" : "",
+        "tester_group_name" : "",
+        "ios_app_token" : "",
+        "android_app_token" : ""
+    },
+    "slack" : {
+        "webhook_url" : "",
+        "notify_user_id" : "",
+        "notify_slack_channel" : ""
+    },
+    "github" : {
+        "access_token" : "",
+        "owner_name" : "",
+        "project_name" : ""
+    },
+    "spreadsheet" : {
+        "api_key_file_name" : ""
+    }
+}

@@ -1,0 +1,4 @@
+import('build/common/notify/Fastfile')
+import('build/ios/Fastfile')
+import('build/android/Fastfile')
+import('build/linux/Fastfile')

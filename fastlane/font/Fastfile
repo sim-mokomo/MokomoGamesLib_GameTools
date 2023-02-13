@@ -1,0 +1,41 @@
+require_relative '../unity/project'
+require_relative './service'
+require_relative './unity/generated_font_report'
+require_relative './unity/generated_font_report_repository'
+
+lane :create_font_unity_assets do
+  Font::Service
+    .new(->(cmd) { execute_on_host(cmd: cmd) })
+    .create_unity_assets
+
+  notify_reports
+end
+
+lane :notify_reports do
+  report_repository = Font::Unity::GeneratedReportRepository.new
+  assets_root_path = File.join(
+    Unity::Project.new(Unity::Project::Env.new).assets_path,
+    'MokomoGames/Localization/Fonts/GenerateReports'
+  )
+  # @type [Array<GeneratedFontReport>]
+  reports = report_repository.read_reports(assets_root_path)
+
+  build_message = ''
+  reports.each do |report|
+    build_message += "#{SlackIcon.get_result_status_icon(!report.wrong_characters_exists)} フォント名: #{report.FontName}\n"
+    build_message += '```'
+    build_message += "アトラス内に含めることができた文字数: #{report.IncludeCharacterList.length}\n"
+    build_message += "フォントデータに存在していない文字: #{report.MissingCharacterList.pack('U*')}\n"
+    build_message += "アトラス内に含めることができなかった文字: #{report.ExcludedCharacterList.pack('U*')}\n"
+    build_message += '```'
+    build_message += "\n"
+  end
+
+  send_slack_message(
+    title: 'フォントアトラス更新',
+    success: reports.all? { |report| !report.wrong_characters_exists },
+    payload: {
+      'ビルド結果' => build_message
+    }
+  )
+end

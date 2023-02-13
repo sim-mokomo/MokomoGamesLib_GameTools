@@ -1,0 +1,24 @@
+require_relative '../github/api'
+require_relative '../system/configs/config'
+require_relative './android/metadata/service'
+require_relative './ios/metadata/service'
+
+import('store/android/Fastfile')
+import('store/ios/Fastfile')
+
+lane :update_store_metadata_files_process do |options|
+  config = System::Configs::Config.load_config.localize
+  Store::IOS::Metadata::Service.new.download(config.spreadsheet_id)
+  Store::Android::Metadata::Service.new.download(config.spreadsheet_id)
+
+  begin
+    ensure_git_status_clean
+  rescue StandardError => _e
+    commit_message = 'bot: ストアのメタデータ自動更新'.freeze
+    current_branch = Git::Utility.get_current_branch_name
+    base = options[:base] || current_branch
+    compare = options[:compare] || "#{current_branch}-update-store-metadata-bot"
+    github_api = Github::API.new(->(cmd) { sh(cmd) })
+    github_api.create_pr(base, compare, commit_message, '', commit_message)
+  end
+end

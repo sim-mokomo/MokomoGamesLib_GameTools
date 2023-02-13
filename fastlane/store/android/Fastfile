@@ -1,0 +1,22 @@
+require_relative './service'
+
+platform :android do
+  desc 'ストアへアップロード'
+  lane :upload_to_store do |options|
+    Store::Android::Service
+      .new
+      .upload(
+        options[:env],
+        lambda { |package_name, aab, version_code, skip_upload_aab, json_key, metadata_path|
+          supply(
+            package_name: package_name,
+            aab: aab,
+            version_code: version_code,
+            skip_upload_aab: skip_upload_aab,
+            json_key: json_key,
+            metadata_path: metadata_path
+          )
+        }
+      )
+  end
+end

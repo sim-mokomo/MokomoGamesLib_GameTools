@@ -1,0 +1,30 @@
+require_relative '../system/configs/config'
+
+import('slack/icon.rb')
+
+desc 'Slackメッセージを送信'
+lane :send_slack_message do |options|
+  config = System::Configs::Config.load_config
+  slack_config = config.slack
+  payload = options[:payload] || {}
+  payload['プロジェクト名'] = config.unity.project_name
+  slack(
+    message: "<@#{slack_config.notify_user_id}> #{options[:title]}",
+    success: options[:success],
+    channel: options[:channel] || slack_config.notify_slack_channel,
+    payload: options[:payload],
+    default_payloads: %i[lane git_branch last_git_commit git_author last_git_commit_hash],
+    attachment_properties: {},
+    slack_url: slack_config.webhook_url
+  )
+end
+
+lane :send_slack_error_message do |options|
+  send_slack_message(
+    title: 'レーン実行中にエラーが発生しました.',
+    success: false,
+    payload: {
+      'Error Info' => options[:exception].to_s
+    }
+  )
+end

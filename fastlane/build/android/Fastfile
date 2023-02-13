@@ -1,0 +1,24 @@
+require_relative '../common/request/build_lane_request'
+require_relative '../common/config_service'
+require_relative 'process'
+
+platform :android do
+  lane :unity_build do |options|
+    lane_request = Build::Common::BuildLaneRequest.new(options)
+    build_config = Build::Common::ConfigService.new
+                                               .create_config(System::Platform::ANDROID, lane_request.environment, lane_request.build_id)
+    Build::Android::Process.new(
+      build_config,
+      lane_request,
+      ->(cmd) { sh(cmd) },
+      ->(cmd) { execute_on_host(cmd: cmd) },
+      lambda { |title, success, payload|
+        send_slack_message(
+          title: title,
+          success: success,
+          payload: payload
+        )
+      }
+    ).execute
+  end
+end

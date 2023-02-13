@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option csharp_namespace = "Protobuf";
+
+message ConsumableObject {
+    string itemID = 1;
+    int32 remainNum = 2;
+}
+
+message NonConsumableObject {
+    string itemID = 1;
+}
+
+message Subscription {
+    string itemID = 1;
+}
+
+message GoogleReciptPayloadJsonData {
+    bool autoRenewing = 1;
+    string orderId = 2;
+    string packageName = 3;
+    string productId = 4;
+    int64 purchaseTime = 5;
+    int32 purchaseState = 6;
+    string developerPayload = 7;
+    string purchaseToken = 8;
+}
+
+message GoogleReciptPayload {
+    GoogleReciptPayloadJsonData json = 1;
+    string signature = 2;
+}
+
+// NOTE: https://docs.unity3d.com/ja/2019.4/Manual/UnityIAPPurchaseReceipts.html
+message Receipt {
+    // NOTE: iOSではBase64レシートのみ。Androidではjson/signature
+    string Payload = 1;
+    string Store = 2;
+    string TransactionID = 3;
+}

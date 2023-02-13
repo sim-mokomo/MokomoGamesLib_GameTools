@@ -1,0 +1,40 @@
+require 'fileutils'
+require 'net/http'
+require 'json'
+require 'uri'
+require 'benchmark'
+
+add_extra_platforms(
+  platforms: %i[windows macOS linux]
+)
+
+import('font/Fastfile')
+import('protobuf/Fastfile')
+import('localize/Fastfile')
+import('store/Fastfile')
+import('system/Fastfile')
+import('slack/Fastfile')
+import('build/Fastfile')
+
+class Net
+  class HTTP
+    def initialize_new(address, port = nil)
+      initialize_old(address, port)
+      @read_timeout = 600
+    end
+    alias initialize_old initialize
+    alias initialize initialize_new
+  end
+end
+
+error do |_lane, exception, _options|
+  send_slack_error_message(exception: exception)
+end
+
+lane :test do
+  p 'Hello World Fastlane'
+end
+
+lane :test_docker_to_host do
+  execute_on_host(cmd: "echo \"Hello World Docker To Host\"")
+end

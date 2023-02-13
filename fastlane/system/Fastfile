@@ -1,0 +1,9 @@
+require_relative '../unity/project'
+
+lane :execute_on_host do |options|
+  sh("sshpass -p #{ENV.fetch('SSH_HOST_PASSWORD')} ssh #{ENV.fetch('SSH_HOST_NAME')}@#{ENV.fetch('SSH_HOST_ADDRESS')} \"#{options[:cmd]}\"")
+end
+
+lane :execute_on_host_on_client_repo do |options|
+  execute_on_host(cmd: "cd #{Unity::Project.new(Unity::Project::Env.new).root_path} && #{options[:cmd]}")
+end
