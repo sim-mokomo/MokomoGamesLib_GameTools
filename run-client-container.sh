@@ -80,7 +80,7 @@ function get_client_repository_root_path(){
       exit 1
     fi
   else
-    pwd
+    dirname "$(dirname "$PWD")"
   fi
 }
 
@@ -93,8 +93,12 @@ export GITHUB_ENV=$github_env_path
 app_platform=$(get_app_platform "$@")
 export PLATFORM=$app_platform
 
+current_git_branch=$(git branch | grep "\\*" | cut -d ' ' -f2)
+export CURRENT_GIT_BRANCH=$current_git_branch
+
 export TO_HOST_BUILD_ROOT_PATH=~/Documents/archives
 mkdir -p $TO_HOST_BUILD_ROOT_PATH
 echo y | docker container prune
 docker-compose build
 docker-compose up -d --force-recreate
+docker-compose exec client bash

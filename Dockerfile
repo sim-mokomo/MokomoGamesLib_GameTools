@@ -51,15 +51,7 @@ ENV RUBYOPT -EUTF-8
 RUN apt-get -y update
 RUN apt install -y ssh
 RUN apt install -y sshpass
-#COPY ./docker/ssh/id_rsa /root/.ssh/id_rsa
-#COPY ./docker/ssh/id_rsa.pub /root/.ssh/id_rsa.pub
-#COPY ./docker/ssh/config /root/.ssh/config
-#COPY ./docker/ssh/ssh_config /etc/ssh/ssh_config
-#RUN chmod 600 /root/.ssh/id_rsa
-#RUN apt install nkf
-#RUN nkf -Lu --overwrite /root/.ssh/id_rsa
-#RUN nkf -Lu --overwrite /root/.ssh/id_rsa.pub
-#RUN nkf -Lu --overwrite /root/.ssh/config
+COPY ./docker/ssh/ssh_config /etc/ssh/ssh_config
 
 # note: install nodejs
 RUN apt install -y nodejs && \
