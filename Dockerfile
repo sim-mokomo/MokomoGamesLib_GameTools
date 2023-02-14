@@ -69,7 +69,7 @@ ENV GIT_AUTHOR_NAME sim-mokomo
 ENV GIT_SSH_COMMAND /usr/bin/ssh
 
 # note: secret情報を追加
-COPY ./secret/ /secret/
+COPY ./apps/secret/ /secret/
 
 WORKDIR home
 

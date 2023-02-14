@@ -1,12 +1,10 @@
 version: '3'
 services: 
+  # NOTE: app/docker-compose.app.yml で実際にビルドを行う
   client:
-    build:
-      context: ../
-      dockerfile: ./commons/Dockerfile
     tty: true
     volumes:
-      - ./:/home
+      # NOTE: ビルド結果を保存するフォルダ
       - type: bind
         source: ~/Documents/archives
         target: /archives

@@ -80,7 +80,7 @@ function get_client_repository_root_path(){
       exit 1
     fi
   else
-    dirname "$(dirname "$PWD")"
+    dirname "$PWD"
   fi
 }
 
@@ -99,6 +99,3 @@ export CURRENT_GIT_BRANCH=$current_git_branch
 export TO_HOST_BUILD_ROOT_PATH=~/Documents/archives
 mkdir -p $TO_HOST_BUILD_ROOT_PATH
 echo y | docker container prune
-docker-compose build
-docker-compose up -d --force-recreate
-docker-compose exec client bash
