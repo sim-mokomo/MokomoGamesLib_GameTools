@@ -41,7 +41,11 @@ module System
 
       # @return [Config]
       def self.load_config
-        Config.load_from_json_file(File.join(File.expand_path('/secret'), 'config.json'))
+        config_root_path = ENV['IS_DOCKER'] ? 
+          File.expand_path('/secret') :
+          File.expand_path('../apps/secret')
+
+        Config.load_from_json_file(File.join(config_root_path, 'config.json'))
       end
 
       # @return [Config]
