@@ -21,7 +21,7 @@ module Build
         github_repository = GithubActions::Repository.new
         github_repository.write_json_to_github_env(
           'UNITY_BUILD_RESULT_JSON',
-          JSON.generate(build_result.as_json),
+          build_result.to_json,
           shell_executor
         )
 
