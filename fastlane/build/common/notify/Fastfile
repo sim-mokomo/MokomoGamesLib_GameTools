@@ -1,24 +1,26 @@
 require_relative 'model'
-require_relative '../result'
+require_relative 'service'
 
 lane :notify_unity_build_result_all_from_github_action do |options|
-  # @type [Array<Unity::Common::Build::Result>]
+  result_args = options.map { |key, val| val}
   build_results = []
-  build_results.push(JSON.parse(options[:macos_build_result], object_class: Build::Common::Result)) if options[:macos_build_result]&.length&.positive?
-  build_results.push(JSON.parse(options[:ios_build_result], object_class: Build::Common::Result)) if options[:ios_build_result]&.length&.positive?
-  build_results.push(JSON.parse(options[:windows_build_result], object_class: Build::Common::Result)) if options[:windows_build_result]&.length&.positive?
-  build_results.push(JSON.parse(options[:android_build_result], object_class: Build::Common::Result)) if options[:android_build_result]&.length&.positive?
+   argument_num = 3 
+   (result_args.length / argument_num).times do |index|
+    elapsed_time_arg = result_args[index * argument_num + 0]
+    elapsed_time = elapsed_time_arg == "" ?  0.0 : result_args[index * argument_num + 0].to_f
+    platform = result_args[index * argument_num + 1]
+    succeeded_arg = result_args[index * argument_num + 2]
+    succeeded = succeeded_arg == "" ? false : succeeded_arg
 
-  if build_results.any?
-    notify_model = Build::Common::Notify::Model.new
-    build_message = build_results.inject('') { |result, x| result + "#{notify_model.create_build_complete_message(x)}\n" }
-
-    send_slack_message(
-      title: 'ビルドレポート',
-      success: build_results.all?(&:succeeded),
-      payload: {
-        'ビルド結果' => build_message
-      }
-    )
+    build_result = Build::Common::Result.new(elapsed_time, platform, succeeded)
+    build_results.push(build_result)
   end
+
+  notify_service = Build::Common::Notify::Service.new
+  notify_service.notify_all_platform(
+    build_results,
+    lambda { |title, success, payload|
+      send_slack_message(title: title, success: success,payload: payload)
+    }
+  )
 end
