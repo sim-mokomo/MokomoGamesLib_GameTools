@@ -8,7 +8,7 @@ platform :ios do
   # @param [Shipping] env
   desc 'ストアアップロード用のXcodeビルド'
   lane :xcode_build do |options|
-    Build::IOS::Service.new.xcode_build(options[:env], ->(request) { gym(request) })
+    Build::IOS::Service.new.xcode_build(options[:env], options[:branch], ->(request) { gym(request) })
   end
 
   lane :unity_build do |options|

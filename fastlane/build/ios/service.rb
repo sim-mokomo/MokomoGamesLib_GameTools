@@ -5,8 +5,7 @@ require_relative '../../system/configs/config'
 module Build
   module IOS
     class Service
-      def xcode_build(env, gym_lane)
-        current_branch = Git::Utility.get_current_branch_name
+      def xcode_build(env, current_branch, gym_lane)
         archives = ArchivesCreator.create_ios
         project_name = System::Configs::Config.load_config.unity.project_name
 

@@ -46,7 +46,9 @@ module Build
                                 cd #{fastlane_root_path} && \\
                                 bundle install && \\
                                 security unlock-keychain -p \"#{ENV.fetch('SSH_HOST_PASSWORD', nil)}\" login.keychain && \\
-                                bundle exec fastlane ios xcode_build env:#{@build_config.common_config.environment}")
+                                bundle exec fastlane ios xcode_build \\
+                                                         env:#{@build_config.common_config.environment} \\
+                                                         branch:#{Git::Utility.get_current_branch_name}")
         end
 
         return unless @request.upload_to_appcenter
