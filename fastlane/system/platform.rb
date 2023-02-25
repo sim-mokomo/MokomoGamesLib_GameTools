@@ -19,31 +19,9 @@ module System
       ]
     end
 
-    # @param [System::Platform]
-    # @return [Boolean]
-    def self.host_platform_is?(platform)
-      ENV['PLATFORM'] == platform
-    end
-
+    # @return [System::Platform]
     def self.machine_platform
       ENV.fetch('PLATFORM', System::Platform::NONE)
-    end
-
-    # @return [Boolean]
-    def self.host_is_windows?
-      host_platform_is?(System::Platform::ANDROID) ||
-        host_platform_is?(System::Platform::WINDOWS)
-    end
-
-    # @return [Boolean]
-    def self.host_is_macos?
-      host_platform_is?(System::Platform::IOS) ||
-        host_platform_is?(System::Platform::MAC_OS)
-    end
-
-    # @return [Boolean]
-    def self.host_is_linux?
-      host_platform_is?(System::Platform::LINUX)
     end
   end
 end
