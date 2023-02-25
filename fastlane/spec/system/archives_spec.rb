@@ -108,7 +108,7 @@ describe 'Archives' do
   describe '#get_archive_id_list' do
     it 'アーカイブIDリストを配列で取得できているか確認' do
       archives = Archives.new(DummyEnv.new)
-      expect(archives.get_archive_id_list('./spec/fixtures/archive/get_archive_id_list')).to eq [1, 2, 3]
+      expect(archives.get_archive_id_list('./commons/fastlane/spec/fixtures/archive/get_archive_id_list')).to eq [1, 2, 3]
     end
   end
 
