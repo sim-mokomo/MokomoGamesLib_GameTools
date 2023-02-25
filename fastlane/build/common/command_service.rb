@@ -1,5 +1,7 @@
 require_relative '../../system/command/command'
 require_relative '../../system/command/custom_option'
+require_relative '../../system/project'
+require_relative '../../unity/service'
 
 module Build
   module Common
@@ -21,7 +23,7 @@ module Build
           System::Command::Option.new('-quit', System::Extensions::String.empty_string),
           System::Command::Option.new('-batchmode', System::Extensions::String.empty_string),
           System::Command::Option.new('-nographics', System::Extensions::String.empty_string),
-          System::Command::Option.new('-projectPath', Unity::Project.new(Unity::Project::Env.new).root_path),
+          System::Command::Option.new('-projectPath', Unity::Project.new(System::Project.repo_root_path).root_path),
           System::Command::Option.new('-executeMethod', execute_method_name)
         ]
       end
@@ -36,9 +38,10 @@ module Build
         options.push(System::Command::CustomOption.new('platform', @common_build_config.platform))
         options.push(System::Command::CustomOption.new('app_id', @common_build_config.app_id))
         command = System::Command::Command.new(
-          Unity::App.host_app_path(@common_build_config.version),
+          Unity::Service.machine_app_path(@common_build_config.version),
           options
         )
+
         unless @common_build_config.build_id.nil?
           command.add_option(System::Command::CustomOption.new('build_id', @common_build_config.build_id.to_s))
         end

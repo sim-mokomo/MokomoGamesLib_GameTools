@@ -3,6 +3,7 @@ require_relative '../common/service'
 require_relative 'command_service'
 require_relative '../../appcenter/service'
 require_relative '../../unity/project'
+require_relative '../../system/project'
 
 module Build
   module IOS
@@ -40,8 +41,7 @@ module Build
 
         if result.succeeded
           # NOTE: ipaファイル作成
-          unity_env = Unity::Project::Env.new
-          fastlane_root_path = File.join(unity_env.repo_root_path, 'tools/commons/fastlane')
+          fastlane_root_path = File.join(System::Project.repo_root_path, 'tools/commons/fastlane')
           @execute_on_host.call("source ~/.zshrc && \\
                                 cd #{fastlane_root_path} && \\
                                 bundle install && \\

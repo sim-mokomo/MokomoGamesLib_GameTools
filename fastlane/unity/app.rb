@@ -15,10 +15,5 @@ module Unity
         raise 'ビルド対応していないプラットフォームが渡されました。'
       end
     end
-
-    def self.host_app_path(unity_version)
-      return app_path(System::Platform::WINDOWS, unity_version) if System::Platform.host_is_windows?
-      return app_path(System::Platform::MAC_OS, unity_version) if System::Platform.host_is_macos?
-    end
   end
 end
