@@ -3,7 +3,7 @@ module Git
     # @return [String]
     def self.get_current_branch_name
       if ENV['IS_DOCKER']
-        return ENV['CURRENT_GIT_BRANCH']
+        ENV.fetch('CURRENT_GIT_BRANCH', nil)
       else
         `git branch | grep \\* | cut -d ' ' -f2`.chomp!
       end

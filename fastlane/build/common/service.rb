@@ -18,19 +18,19 @@ module Build
       def build(platform, command, shell_executor)
         github_repository = GithubActions::Repository.new
         github_repository.write_json_to_github_env(
-          'UNITY_BUILD_RESULT_PLATFORM', 
+          'UNITY_BUILD_RESULT_PLATFORM',
           platform,
           shell_executor
         )
         build_result = exec_unity_build(platform, command, shell_executor)
 
         github_repository.write_json_to_github_env(
-          'UNITY_BUILD_RESULT_ELAPSED_TIME', 
+          'UNITY_BUILD_RESULT_ELAPSED_TIME',
           build_result.elapsed_time,
           shell_executor
         )
         github_repository.write_json_to_github_env(
-          'UNITY_BUILD_RESULT_SUCCEEDED', 
+          'UNITY_BUILD_RESULT_SUCCEEDED',
           build_result.succeeded,
           shell_executor
         )
@@ -67,8 +67,7 @@ module Build
           p e.message
         end
 
-        build_result = Build::Common::Result.new(build_time, platform, succeeded)
-        build_result
+        Build::Common::Result.new(build_time, platform, succeeded)
       end
     end
   end

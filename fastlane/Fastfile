@@ -36,5 +36,5 @@ lane :test do
 end
 
 lane :test_docker_to_host do
-  execute_on_host(cmd: "echo \"Hello World Docker To Host\"")
+  execute_on_host(cmd: 'echo "Hello World Docker To Host"')
 end

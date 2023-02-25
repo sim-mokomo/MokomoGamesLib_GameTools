@@ -2,15 +2,15 @@ require_relative 'model'
 require_relative 'service'
 
 lane :notify_unity_build_result_all_from_github_action do |options|
-  result_args = options.map { |key, val| val}
+  result_args = options.map { |_key, val| val }
   build_results = []
-   argument_num = 3 
-   (result_args.length / argument_num).times do |index|
-    elapsed_time_arg = result_args[index * argument_num + 0]
-    elapsed_time = elapsed_time_arg == "" ?  0.0 : result_args[index * argument_num + 0].to_f
-    platform = result_args[index * argument_num + 1]
-    succeeded_arg = result_args[index * argument_num + 2]
-    succeeded = succeeded_arg == "" ? false : succeeded_arg
+  argument_num = 3
+  (result_args.length / argument_num).times do |index|
+    elapsed_time_arg = result_args[(index * argument_num) + 0]
+    elapsed_time = elapsed_time_arg == '' ? 0.0 : result_args[(index * argument_num) + 0].to_f
+    platform = result_args[(index * argument_num) + 1]
+    succeeded_arg = result_args[(index * argument_num) + 2]
+    succeeded = succeeded_arg == '' ? false : succeeded_arg
 
     build_result = Build::Common::Result.new(elapsed_time, platform, succeeded)
     build_results.push(build_result)
@@ -20,7 +20,7 @@ lane :notify_unity_build_result_all_from_github_action do |options|
   notify_service.notify_all_platform(
     build_results,
     lambda { |title, success, payload|
-      send_slack_message(title: title, success: success,payload: payload)
+      send_slack_message(title: title, success: success, payload: payload)
     }
   )
 end
