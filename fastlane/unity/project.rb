@@ -1,36 +1,16 @@
 module Unity
   class Project
-    module IEnv
-      def repo_root_path
-        raise 'Not Implemented'
-      end
-    end
+    attr_reader :repo_root_path
 
-    class Env
-      include IEnv
-
-      # @return [String]
-      def repo_root_path
-        ENV.fetch('REPOSITORY_ROOT_PATH', '')
-      end
-    end
-
-    # @return [Env]
-    attr_reader :env
-
-    def initialize(env)
-      @env = env
+    # @param [String]
+    def initialize(repo_root_path)
+      @repo_root_path = repo_root_path
     end
 
     # @return [String]
     def root_path
-      env_repo_root_path = @env.repo_root_path
       client_root_folder_name = 'client'.freeze
-      if env_repo_root_path.empty?
-        File.join(File.expand_path('../../../'), client_root_folder_name)
-      else
-        File.join(env_repo_root_path, client_root_folder_name)
-      end
+      File.join(@repo_root_path, client_root_folder_name)
     end
 
     # @return [String]

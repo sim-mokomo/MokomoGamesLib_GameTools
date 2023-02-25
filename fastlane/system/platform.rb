@@ -25,6 +25,10 @@ module System
       ENV['PLATFORM'] == platform
     end
 
+    def self.machine_platform
+      ENV.fetch('PLATFORM', System::Platform::NONE)
+    end
+
     # @return [Boolean]
     def self.host_is_windows?
       host_platform_is?(System::Platform::ANDROID) ||
