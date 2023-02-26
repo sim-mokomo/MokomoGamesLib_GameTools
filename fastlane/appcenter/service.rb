@@ -27,10 +27,10 @@ module AppCenter
 
       case platform
       when System::Platform::ANDROID
-        aab_path = ArchivesCreator.create_android.get_latest_aab_file_path(false, project_name, current_branch, env)
+        aab_path = Archives::Android::Archive.new.latest_aab_file_path(false, project_name, current_branch, env)
         shell_executor.call(create_upload_command(platform, aab_path))
       when System::Platform::IOS
-        ipa_path = ArchivesCreator.create_ios.get_latest_ipa_file_path(false, project_name, current_branch, env)
+        ipa_path = Archives::IOS::Archive.new.latest_ipa_file_path(false, project_name, current_branch, env)
         shell_executor.call(create_upload_command(platform, ipa_path))
       else
         throw 'Error: サポートされていないプラットフォームです'

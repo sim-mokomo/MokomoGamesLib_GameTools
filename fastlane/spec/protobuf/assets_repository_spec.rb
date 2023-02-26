@@ -4,7 +4,7 @@ module ProtoBuf
   describe Repository do
     describe 'message_path_list' do
       it 'メッセージファイルが全て取得できることを確認' do
-        message_list_root_path = './commons/fastlane/spec/fixtures/protobuf/message_path_list'
+        message_list_root_path = './commons/fastlane/spec/protobuf/fixtures/protobuf/message_path_list'
         repository = ProtoBuf::Repository.new(message_list_root_path)
         path_list = repository.message_path_list
 

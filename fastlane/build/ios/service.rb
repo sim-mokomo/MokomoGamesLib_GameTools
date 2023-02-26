@@ -6,19 +6,19 @@ module Build
   module IOS
     class Service
       def xcode_build(env, current_branch, gym_lane)
-        archives = ArchivesCreator.create_ios
+        archives = Archives::IOS::Archive.new
         project_name = System::Configs::Config.load_config.unity.project_name
 
         is_host = true
-        xcode_workspace_path = archives.get_latest_xcode_workspace_path(is_host, project_name, current_branch, env)
-        latest_ipa_dir = archives.get_latest_ipa_dir(is_host, project_name, current_branch, env)
+        xcode_workspace_path = archives.latest_xcworkspace_path(is_host, project_name, current_branch, env)
+        latest_ipa_dir = archives.latest_ipa_dir(is_host, project_name, current_branch, env)
 
         xcode = Build::IOS::Xcode.new
         gym_request = {}
         if File.exist?(xcode_workspace_path)
           gym_request[:workspace] = xcode_workspace_path
         else
-          gym_request[:project] = archives.get_latest_xcode_project_path(is_host, project_name, current_branch, env)
+          gym_request[:project] = archives.latest_xcodeproj_path(is_host, project_name, current_branch, env)
         end
         gym_request[:configuration] = xcode.get_configuration(env)
         gym_request[:scheme] = xcode.get_scheme

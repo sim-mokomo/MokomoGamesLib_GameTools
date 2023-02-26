@@ -1,7 +1,7 @@
 require_relative 'config'
 require_relative '../../github_action/repository'
 require_relative '../../system/extensions/string'
-require_relative '../../system/archives_creator'
+require_relative '../../archives/service'
 require_relative '../../system/command/command'
 require_relative '../../system/command/option'
 require_relative '../../system/command/custom_option'
@@ -42,8 +42,7 @@ module Build
       # @param [String] current_branch
       # @note インクリメントビルド向けの処理、次回のビルド用に過去のビルドをコピーする
       def copy_build_archive_to_next(build_config, current_branch)
-        # increment build
-        ArchivesCreator.create.copy_build_archive_to_next_archive(
+        Archives::Service.copy_archive_to_next_archive(
           false,
           build_config.project_name,
           current_branch,

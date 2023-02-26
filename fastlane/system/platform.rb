@@ -8,6 +8,8 @@ module System
     MAC_OS = 'StandaloneOSX'.freeze
     LINUX = 'StandaloneLinux64'.freeze
 
+    PLATFORM_KEY = 'PLATFORM'.freeze
+
     # @return [Array<String>]
     def self.all_platforms
       [
@@ -21,7 +23,7 @@ module System
 
     # @return [System::Platform]
     def self.machine_platform
-      ENV.fetch('PLATFORM', System::Platform::NONE)
+      ENV.fetch(PLATFORM_KEY, '')
     end
   end
 end
