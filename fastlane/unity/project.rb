@@ -1,6 +1,6 @@
 module Unity
   class Project
-    attr_reader :repo_root_path
+    attr_reader :root_path
 
     # @param [String]
     def initialize(repo_root_path)

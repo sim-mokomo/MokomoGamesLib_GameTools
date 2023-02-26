@@ -41,7 +41,7 @@ module Build
 
         if result.succeeded
           # NOTE: ipaファイル作成
-          fastlane_root_path = File.join(System::Project.repo_root_path, 'tools/commons/fastlane')
+          fastlane_root_path = File.join(System::Project.root_path, 'tools/commons/fastlane')
           @execute_on_host.call("source ~/.zshrc && \\
                                 cd #{fastlane_root_path} && \\
                                 bundle install && \\
