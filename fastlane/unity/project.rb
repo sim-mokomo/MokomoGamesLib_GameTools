@@ -14,7 +14,7 @@ module Unity
 
     # @return [String]
     def assets_path
-      File.join(project_root_path, 'Assets')
+      File.join(root_path, 'Assets')
     end
   end
 end
