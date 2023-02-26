@@ -6,5 +6,5 @@ lane :execute_on_host do |options|
 end
 
 lane :execute_on_host_on_client_repo do |options|
-  execute_on_host(cmd: "cd #{Unity::Project.new(System::Project.repo_root_path).root_path} && #{options[:cmd]}")
+  execute_on_host(cmd: "cd #{Unity::Project.new(System::Project.root_path).root_path} && #{options[:cmd]}")
 end
