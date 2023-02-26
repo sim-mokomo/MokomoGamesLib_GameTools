@@ -12,7 +12,7 @@ import('font/Fastfile')
 import('protobuf/Fastfile')
 import('localize/Fastfile')
 import('store/Fastfile')
-import('system/Fastfile')
+import('ssh/Fastfile')
 import('slack/Fastfile')
 import('build/Fastfile')
 

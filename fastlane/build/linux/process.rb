@@ -5,7 +5,7 @@ module Build
     class Process < Build::Common::Process
       def create_build_command
         command = super
-        command.add_option(System::Command::CustomOption.new('headlessMode', true))
+        command.add_option(Commands::Option.new('headlessMode', true))
       end
     end
   end

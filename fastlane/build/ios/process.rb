@@ -30,7 +30,7 @@ module Build
           .copy_build_archive_to_next(@build_config.common_config, Git::Utility.get_current_branch_name)
       end
 
-      # @return [System::Command::Command]
+      # @return [Commands::Command]
       def create_build_command
         Build::IOS::CommandService.new(@build_config).create_command
       end

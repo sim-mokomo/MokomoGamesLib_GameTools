@@ -2,15 +2,15 @@ module System
   module Command
     class Command
       # @return [String]
-      attr_reader :execute_key
+      attr_reader :command_path
 
       # @return [Array<BuildCommandOption>]
       attr_reader :options
 
-      # @param [String] execute_key
+      # @param [String] command_path
       # @param [Array<BuildCommandOption>] options
-      def initialize(execute_key, options)
-        @execute_key = execute_key
+      def initialize(command_path, options)
+        @command_path = command_path
         @options = options
       end
 

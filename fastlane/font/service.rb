@@ -1,5 +1,5 @@
 require_relative './unity/repository'
-require_relative '../system/command/command'
+require_relative '../commands/command'
 require_relative '../system/configs/config'
 require_relative '../unity/service'
 
@@ -17,12 +17,12 @@ module Font
 
     # @param [System::Platform]
     def create_unity_assets
-      command = System::Command::Command.new(
+      command = Commands::Command.new(
         ::Unity::Service.machine_app_path(System::Configs::Config.load_config.unity.version),
         ::Build::Common::CommandService.create_command_options('MokomoGames.Font.Editor.FontAssetCreatorWindow.GenerateFontAtlasAllFromEditor')
       )
 
-      command_str = System::Command::Parser.new.parse([command])
+      command_str = Commands::Unity::Parser.new.parse([command])
       @shell_executor_on_host.call(command_str)
     end
 

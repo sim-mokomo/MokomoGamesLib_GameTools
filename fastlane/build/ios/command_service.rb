@@ -17,11 +17,11 @@ module Build
       end
 
       def create_command
-        # @type [System::Command::Command]
+        # @type [Commands::Command]
         command = super
-        command.add_option(System::Command::CustomOption.new('provisioningProfileName', @build_config.provisioning_profile_name))
-        command.add_option(System::Command::CustomOption.new('teamId', @build_config.team_id))
-        command.add_option(System::Command::CustomOption.new('admob_application_identify', @build_config.admob_application_id))
+        command.add_option(Commands::Unity::Option.new('provisioningProfileName', @build_config.provisioning_profile_name))
+        command.add_option(Commands::Unity::Option.new('teamId', @build_config.team_id))
+        command.add_option(Commands::Unity::Option.new('admob_application_identify', @build_config.admob_application_id))
         command
       end
     end

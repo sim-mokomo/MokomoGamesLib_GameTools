@@ -1,9 +1,10 @@
-require_relative 'option'
+require_relative '../option'
 
-module System
-  module Command
-    class CustomOption < Option
+module Commands
+  module Unity
+    class Option < Commands::Option
       OPTION_PREFIX = 'option:'.freeze
+
       def initialize(key, parameter)
         super("#{OPTION_PREFIX}#{key}", parameter)
       end

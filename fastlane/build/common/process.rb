@@ -35,7 +35,7 @@ module Build
 
       def on_pre_build; end
 
-      # @return [System::Command::Command]
+      # @return [Commands::Command]
       def create_build_command; end
 
       # @return [Build::Common::Result]

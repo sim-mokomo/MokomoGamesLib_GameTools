@@ -1,14 +1,13 @@
-require_relative 'command'
+require_relative '../command'
 
-module System
-  module Command
+module Commands
+  module Unity
     class Parser
-      OPTION_PREFIX = 'option:'.freeze
       # @param [Array<BuildCommand>] commands
       def parse(commands)
         command_string = ''
         commands.each do |command|
-          command_string += "#{command.execute_key} "
+          command_string += "#{command.command_path} "
 
           command.options.each do |option|
             command_string += "#{option.key} "

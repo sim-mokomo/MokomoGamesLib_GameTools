@@ -1,5 +1,5 @@
-require_relative '../../system/command/command'
-require_relative '../../system/command/custom_option'
+require_relative '../../commands/command'
+require_relative '../../commands/unity/option'
 require_relative '../../system/project'
 require_relative '../../unity/service'
 require_relative '../../extensions/string'
@@ -18,33 +18,33 @@ module Build
         @common_build_config = build_config
       end
 
-      # @return [Array<System::Command::Option>]
+      # @return [Array<Commands::Option>]
       def self.create_command_options(execute_method_name)
         [
-          System::Command::Option.new('-quit', Extensions::String.empty_string),
-          System::Command::Option.new('-batchmode', Extensions::String.empty_string),
-          System::Command::Option.new('-nographics', Extensions::String.empty_string),
-          System::Command::Option.new('-projectPath', Unity::Project.new(System::Project.repo_root_path).root_path),
-          System::Command::Option.new('-executeMethod', execute_method_name)
+          Commands::Option.new('-quit', Extensions::String.empty_string),
+          Commands::Option.new('-batchmode', Extensions::String.empty_string),
+          Commands::Option.new('-nographics', Extensions::String.empty_string),
+          Commands::Option.new('-projectPath', Unity::Project.new(System::Project.repo_root_path).root_path),
+          Commands::Option.new('-executeMethod', execute_method_name)
         ]
       end
 
-      # @return [System::Command::Command]
+      # @return [Commands::Command]
       def create_command
         options = Build::Common::CommandService.create_command_options('MokomoGames.Editor.Builds.Process.BuildFromCui')
-        options.push(System::Command::CustomOption.new('environment', @common_build_config.environment))
-        options.push(System::Command::CustomOption.new('version', @common_build_config.app_version))
-        options.push(System::Command::CustomOption.new('productName', @common_build_config.product_name))
-        options.push(System::Command::CustomOption.new('output_path', @common_build_config.output_path))
-        options.push(System::Command::CustomOption.new('platform', @common_build_config.platform))
-        options.push(System::Command::CustomOption.new('app_id', @common_build_config.app_id))
-        command = System::Command::Command.new(
+        options.push(Commands::Unity::Option.new('environment', @common_build_config.environment))
+        options.push(Commands::Unity::Option.new('version', @common_build_config.app_version))
+        options.push(Commands::Unity::Option.new('productName', @common_build_config.product_name))
+        options.push(Commands::Unity::Option.new('output_path', @common_build_config.output_path))
+        options.push(Commands::Unity::Option.new('platform', @common_build_config.platform))
+        options.push(Commands::Unity::Option.new('app_id', @common_build_config.app_id))
+        command = Commands::Command.new(
           Unity::Service.machine_app_path(@common_build_config.version),
           options
         )
 
         unless @common_build_config.build_id.nil?
-          command.add_option(System::Command::CustomOption.new('build_id', @common_build_config.build_id.to_s))
+          command.add_option(Commands::Unity::Option.new('build_id', @common_build_config.build_id.to_s))
         end
 
         command
