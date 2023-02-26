@@ -1,6 +1,6 @@
 require_relative 'config'
 require_relative '../../github_action/repository'
-require_relative '../../system/extensions/string'
+require_relative '../../extensions/string'
 require_relative '../../archives/service'
 require_relative '../../system/command/command'
 require_relative '../../system/command/option'

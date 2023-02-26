@@ -2,6 +2,7 @@ require_relative '../../system/command/command'
 require_relative '../../system/command/custom_option'
 require_relative '../../system/project'
 require_relative '../../unity/service'
+require_relative '../../extensions/string'
 
 module Build
   module Common
@@ -20,9 +21,9 @@ module Build
       # @return [Array<System::Command::Option>]
       def self.create_command_options(execute_method_name)
         [
-          System::Command::Option.new('-quit', System::Extensions::String.empty_string),
-          System::Command::Option.new('-batchmode', System::Extensions::String.empty_string),
-          System::Command::Option.new('-nographics', System::Extensions::String.empty_string),
+          System::Command::Option.new('-quit', Extensions::String.empty_string),
+          System::Command::Option.new('-batchmode', Extensions::String.empty_string),
+          System::Command::Option.new('-nographics', Extensions::String.empty_string),
           System::Command::Option.new('-projectPath', Unity::Project.new(System::Project.repo_root_path).root_path),
           System::Command::Option.new('-executeMethod', execute_method_name)
         ]
