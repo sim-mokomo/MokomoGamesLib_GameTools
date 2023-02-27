@@ -1,16 +1,15 @@
 module Unity
   class Project
-    attr_reader :repo_root_path
+    attr_reader :project_root_path
 
     # @param [String]
-    def initialize(repo_root_path)
-      @repo_root_path = repo_root_path
+    def initialize(project_root_path)
+      @project_root_path = project_root_path
     end
 
     # @return [String]
     def root_path
-      client_root_folder_name = 'client'.freeze
-      File.join(@repo_root_path, client_root_folder_name)
+      File.join(@project_root_path, 'client')
     end
 
     # @return [String]

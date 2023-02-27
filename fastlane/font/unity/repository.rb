@@ -10,7 +10,7 @@ module Font
       # @param [String] file_name
       # @param [Array<System::LanguageType>]
       def download_characters_file(spreadsheet_id, table_name, file_name, languages)
-        File.open(File.join(::Unity::Project.new(System::Project.repo_root_path).assets_path,
+        File.open(File.join(::Unity::Project.new(System::Project.root_path).assets_path,
                             'MokomoGames/Localization/Fonts/CharacterList',
                             file_name), 'w') do |file|
           characters = Localized::LocalizedSheet.new(spreadsheet_id, table_name).uniq_characters_all(languages)

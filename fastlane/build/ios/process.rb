@@ -30,7 +30,7 @@ module Build
           .copy_build_archive_to_next(@build_config.common_config, Git::Utility.get_current_branch_name)
       end
 
-      # @return [System::Command::Command]
+      # @return [Commands::Command]
       def create_build_command
         Build::IOS::CommandService.new(@build_config).create_command
       end
@@ -41,7 +41,7 @@ module Build
 
         if result.succeeded
           # NOTE: ipaファイル作成
-          fastlane_root_path = File.join(System::Project.repo_root_path, 'tools/commons/fastlane')
+          fastlane_root_path = File.join(System::Project.root_path, 'tools/commons/fastlane')
           @execute_on_host.call("source ~/.zshrc && \\
                                 cd #{fastlane_root_path} && \\
                                 bundle install && \\

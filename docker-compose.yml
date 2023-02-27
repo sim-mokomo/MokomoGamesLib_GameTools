@@ -14,6 +14,7 @@ services:
       - SSH_HOST_PASSWORD
       - REPOSITORY_ROOT_PATH
       - TO_HOST_BUILD_ROOT_PATH
+      - TO_DOCKER_BUILD_ROOT_PATH=/archives
       - COMPOSE_HTTP_TIMEOUT=1000
       - IS_DOCKER=true
       - GITHUB_ENV

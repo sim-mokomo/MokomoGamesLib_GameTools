@@ -8,7 +8,7 @@ module ProtoBuf
 
     # @return [Array<String>]
     def message_path_list
-      Dir.glob(File.expand_path("#{@message_root_path}/**/*.proto"))
+      Dir.glob(File.expand_path("#{@message_root_path}/**/*.proto")).sort!
     end
   end
 end

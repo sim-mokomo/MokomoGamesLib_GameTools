@@ -1,5 +1,4 @@
 require_relative '../../system/configs/config'
-require_relative '../../system/archives_creator'
 require_relative '../../git/utility'
 require_relative 'config'
 
@@ -25,9 +24,9 @@ module Build
         build_config.app_id = config.store.app_identifier
 
         cur_branch_name = Git::Utility.get_current_branch_name
-        archives = ArchivesCreator.create
-        build_config.build_id = build_id || (archives.get_latest_archive_id(false, project_name, cur_branch_name, env) + 1)
-        build_config.output_path = archives.to_platform_dir_path(true, project_name, cur_branch_name, env, build_config.build_id, platform)
+        archives = Archives::Archive.new
+        build_config.build_id = build_id || (archives.latest_archive_id(false, project_name, cur_branch_name, env) + 1)
+        build_config.output_path = archives.platform_dir_path(true, project_name, cur_branch_name, env, build_config.build_id, platform)
         build_config
       end
     end

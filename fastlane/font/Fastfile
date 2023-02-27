@@ -15,7 +15,7 @@ end
 lane :notify_reports do
   report_repository = Font::Unity::GeneratedReportRepository.new
   assets_root_path = File.join(
-    Unity::Project.new(System::Project.repo_root_path).assets_path,
+    Unity::Project.new(System::Project.root_path).assets_path,
     'MokomoGames/Localization/Fonts/GenerateReports'
   )
   # @type [Array<GeneratedFontReport>]

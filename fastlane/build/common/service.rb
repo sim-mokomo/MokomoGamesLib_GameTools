@@ -1,11 +1,11 @@
 require_relative 'config'
 require_relative '../../github_action/repository'
-require_relative '../../system/extensions/string'
-require_relative '../../system/archives_creator'
-require_relative '../../system/command/command'
-require_relative '../../system/command/option'
-require_relative '../../system/command/custom_option'
-require_relative '../../system/command/parser'
+require_relative '../../extensions/string'
+require_relative '../../archives/service'
+require_relative '../../commands/command'
+require_relative '../../commands/option'
+require_relative '../../commands/unity/option'
+require_relative '../../commands/unity/parser'
 require_relative '../../system/shipping'
 require_relative '../../unity/app'
 require_relative '../../unity/project'
@@ -42,8 +42,7 @@ module Build
       # @param [String] current_branch
       # @note インクリメントビルド向けの処理、次回のビルド用に過去のビルドをコピーする
       def copy_build_archive_to_next(build_config, current_branch)
-        # increment build
-        ArchivesCreator.create.copy_build_archive_to_next_archive(
+        Archives::Service.copy_archive_to_next_archive(
           false,
           build_config.project_name,
           current_branch,
@@ -55,12 +54,12 @@ module Build
 
       private
 
-      # @param [System::Command] command
+      # @param [Commands::Command] command
       def exec_unity_build(platform, command, shell_executor)
         succeeded = false
 
         build_time = Benchmark.realtime do
-          cmd = System::Command::Parser.new.parse([command])
+          cmd = Commands::Unity::Parser.new.parse([command])
           shell_executor.call(cmd)
           succeeded = true
         rescue StandardError => e

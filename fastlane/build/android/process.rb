@@ -14,7 +14,7 @@ module Build
           .copy_build_archive_to_next(@common_build_config, Git::Utility.get_current_branch_name)
       end
 
-      # @return [System::Command::Command]
+      # @return [Commands::Command]
       def create_build_command
         Build::Common::CommandService.new(@common_build_config).create_command
       end

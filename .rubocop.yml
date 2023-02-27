@@ -65,7 +65,7 @@
   Lint/ConstantDefinitionInBlock:
     Enabled: false
   Layout/LineLength:
-    Max: 170
+    Enabled: false
   Style/IfUnlessModifier:
     Enabled: false
   Naming/AccessorMethodName:
