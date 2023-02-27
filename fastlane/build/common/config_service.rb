@@ -1,5 +1,6 @@
 require_relative '../../system/configs/config'
 require_relative '../../git/utility'
+require_relative '../../archives/archive'
 require_relative 'config'
 
 module Build

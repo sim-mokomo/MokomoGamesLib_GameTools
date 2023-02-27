@@ -24,7 +24,7 @@ module Build
           Commands::Option.new('-quit', Extensions::String.empty_string),
           Commands::Option.new('-batchmode', Extensions::String.empty_string),
           Commands::Option.new('-nographics', Extensions::String.empty_string),
-          Commands::Option.new('-projectPath', Unity::Project.new(System::Project.root_path).project_root_path),
+          Commands::Option.new('-projectPath', Unity::Project.new(System::Project.root_path).root_path),
           Commands::Option.new('-executeMethod', execute_method_name)
         ]
       end

@@ -47,8 +47,7 @@ module Build
           build_config.project_name,
           current_branch,
           build_config.environment,
-          build_config.platform,
-          build_config.build_id
+          build_config.platform
         )
       end
 
